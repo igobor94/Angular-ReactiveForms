@@ -33,6 +33,15 @@
             <input type="radio" value="email" formControlName="notification" (click)="setNotification('email')"  />
         </label>
     </div>
+    <div class="form__rating">
+        <label>
+            rating
+            <input type="number" formControlName="rating"  />
+        </label>
+        <span *ngIf="defaultForm.get('rating').errors?.range">
+            Please rate your experience from 1 to 5
+        </span>
+    </div>
     <div class="form__submit">
         <input type="submit" />
     </div>

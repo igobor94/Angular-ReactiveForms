@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
-
+function ratingRange(c: AbstractControl): { [key: string]: boolean } | null {
+  if (c.value !== null && (isNaN(c.value) || c.value < 1 || c.value > 5)) {
+    return { 'range': true }
+  }
+  return null
+}
 
 @Component({
   selector: 'app-form',
@@ -21,7 +26,7 @@ export class FormComponent implements OnInit {
       lastName: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       phone: '',
-      rating: null,
+      rating: [null, ratingRange],
       notification: 'text'
     })
   }

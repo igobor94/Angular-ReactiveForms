@@ -1,21 +1,36 @@
-<form class="form">
-
+<form class="form" [formGroup]="defaultForm" (ngSubmit)="save()">
     <div class="form__firstName">
         <label>
             First Name
-            <input type="text" />
+            <input type="text" placeholder="press first name..." formControlName="firstName" />
         </label>
     </div>
     <div class="form__lastName">
         <label>
             Last Name
-            <input type="text" />
+            <input type="text" formControlName="lastName"  />
         </label>
     </div>
     <div class="form__email">
         <label>
             E-mail
-            <input type="email" />
+            <input type="email" formControlName="email"  />
+        </label>
+    </div>
+    <div class="form__phone">
+        <label>
+            Phone
+            <input type="text" formControlName="phone"  />
+        </label>
+    </div>
+    <div class="form__notification">
+        <label>
+            Text
+            <input type="radio" value="text" formControlName="notification" (click)="setNotification('text')"  />
+        </label>
+        <label>
+            E-mail
+            <input type="radio" value="email" formControlName="notification" (click)="setNotification('email')"  />
         </label>
     </div>
     <div class="form__submit">

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { debounceTime } from 'rxjs';
 
 function ratingRange(min: number, max: number): ValidatorFn {
   return (c: AbstractControl): { [key: string]: boolean } | null => {
@@ -66,7 +67,7 @@ export class FormComponent implements OnInit {
     console.log(this.defaultForm.get('notification'));
 
     const emailControl = this.defaultForm.get('emailGroup.email');
-    emailControl.valueChanges.subscribe((value: any) => this.setMessage(emailControl))
+    emailControl.valueChanges.pipe(debounceTime(1000)).subscribe((value: any) => this.setMessage(emailControl))
   }
 
   save() {

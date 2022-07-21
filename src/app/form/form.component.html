@@ -16,10 +16,13 @@
         <div class="form__email">
             <label>
                 E-mail
-                <input type="email" formControlName="email" [ngClass]="{'is-invalid': defaultForm.get('emailGroup').errors || ((defaultForm.get('emailGroup.email').touched || defaultForm.get('emailGroup.email').dirty) && !defaultForm.get('emailGroup.email').valid )}"/>
+                <input type="email" formControlName="email" [ngClass]="{'is-invalid': emailMessage}"/>
             </label>
-            <span *ngIf="defaultForm.get('emailGroup.email').errors?.required">
+            <!-- <span *ngIf="defaultForm.get('emailGroup.email').errors?.required">
                 Please press your email address
+            </span> -->
+            <span>
+                {{ emailMessage }}
             </span>
         </div>
         <div class="form__email form__confirm-email">
@@ -39,17 +42,20 @@
     <div class="form__phone">
         <label>
             Phone
-            <input type="text" formControlName="phone"  />
+            <input type="number" formControlName="phone"  />
         </label>
+        <span *ngIf="defaultForm.get('phone').errors?.required">
+            Please enter your number phone
+        </span>
     </div>
     <div class="form__notification">
         <label>
             Text
-            <input type="radio" value="text" formControlName="notification" (click)="setNotification('text')"  />
+            <input type="radio" value="text" formControlName="notification" />
         </label>
         <label>
             E-mail
-            <input type="radio" value="email" formControlName="notification" (click)="setNotification('email')"  />
+            <input type="radio" value="email" formControlName="notification"  />
         </label>
     </div>
     <div class="form__rating">

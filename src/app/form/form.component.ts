@@ -23,14 +23,27 @@ function emailMatcher(c: AbstractControl): {[key: string]: boolean} | null {
   return { 'match': true };
 }
 
+function watchChanges(c: AbstractControl) {
+  const phoneControl = c.get('phone');
+
+  phoneControl?.valueChanges.subscribe(value => console.log(value));
+  phoneControl?.statusChanges.subscribe(value => console.log(value));
+}
+
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss']
 })
 export class FormComponent implements OnInit {
-
   defaultForm: FormGroup | any;
+  emailMessage: string = '';
+
+
+  private validationMessages: any = {
+    required: 'Please enter your email address',
+    email: 'Please enter a valid email address.'
+  };
 
   constructor(private fb: FormBuilder) { }
 
@@ -46,10 +59,28 @@ export class FormComponent implements OnInit {
       rating: [null, ratingRange(1, 5)],
       notification: 'text'
     })
+
+    // watchChanges(this.defaultForm)
+
+    this.defaultForm.get('notification').valueChanges.subscribe((value: string) => this.setNotification(value))
+    console.log(this.defaultForm.get('notification'));
+
+    const emailControl = this.defaultForm.get('emailGroup.email');
+    emailControl.valueChanges.subscribe((value: any) => this.setMessage(emailControl))
   }
 
   save() {
     console.log(this.defaultForm)
+  }
+
+  setMessage(c: AbstractControl): void {
+    this.emailMessage = '';
+    if ((c.touched || c.dirty) && c.errors) {
+      console.log(c)
+      this.emailMessage = Object.keys(c.errors).map(key => this.validationMessages[key]).join('')
+      console.log(this.emailMessage)
+    }
+    
   }
 
   setNotification(notifyVia: string): void {

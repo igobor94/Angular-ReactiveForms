@@ -8,7 +8,7 @@
     <div class="form__lastName">
         <label>
             Last Name
-            <input type="text" formControlName="lastName"  />
+            <input type="text" formControlName="lastName" />
         </label>
     </div>
 
@@ -16,7 +16,7 @@
         <div class="form__email">
             <label>
                 E-mail
-                <input type="email" formControlName="email" [ngClass]="{'is-invalid': emailMessage}"/>
+                <input type="email" formControlName="email" [ngClass]="{'is-invalid': emailMessage}" />
             </label>
             <!-- <span *ngIf="defaultForm.get('emailGroup.email').errors?.required">
                 Please press your email address
@@ -28,7 +28,7 @@
         <div class="form__email form__confirm-email">
             <label>
                 confirm e-mail
-                <input type="email" formControlName="confirmEmail"  />
+                <input type="email" formControlName="confirmEmail" />
             </label>
             <span *ngIf="defaultForm.get('emailGroup.confirmEmail').errors?.required">
                 Please confirm your email address
@@ -39,10 +39,11 @@
         </div>
     </div>
 
+
     <div class="form__phone">
         <label>
             Phone
-            <input type="number" formControlName="phone"  />
+            <input type="number" formControlName="phone" />
         </label>
         <span *ngIf="defaultForm.get('phone').errors?.required">
             Please enter your number phone
@@ -55,13 +56,13 @@
         </label>
         <label>
             E-mail
-            <input type="radio" value="email" formControlName="notification"  />
+            <input type="radio" value="email" formControlName="notification" />
         </label>
     </div>
     <div class="form__rating">
         <label>
             rating
-            <input type="number" formControlName="rating"  />
+            <input type="number" formControlName="rating" />
         </label>
         <span *ngIf="defaultForm.get('rating').errors?.range">
             Please rate your experience from 1 to 5
@@ -69,6 +70,68 @@
     </div>
     <div class="form__submit">
         <input type="submit" />
+    </div>
+
+    <div class="form__sendCatalog">
+        <label>
+            Send me your catalog
+            <input type="checkbox" formControlName="sendCatalog" />
+        </label>
+    </div>
+
+    <div class="form__address" *ngIf="defaultForm.get('sendCatalog').value">
+
+        <div formArrayName="addresses">
+            <div formGroupName="addresses">
+                <div class="form__checkInline">
+                    <label>
+                        Work
+                        <input type="radio" value="work" formControlName="addressType" />
+                    </label>
+                    <label>
+                        Home
+                        <input type="radio" value="home" formControlName="addressType" />
+                    </label>
+                    <label>
+                        Other
+                        <input type="radio" value="other" formControlName="addressType" />
+                    </label>
+                </div>
+                <label>
+                    Street Address 1
+                    <input type="text" formControlName="streetAddress1" />
+                </label>
+                <label>
+                    Street Address 2
+                    <input type="text" formControlName="streetAddress2" />
+                </label>
+                <label>
+                    Zip Code
+                    <input type="text" formControlName="zipCode" />
+                </label>
+                <label>
+                    City
+                    <input type="text" formControlName="city" />
+                </label>
+                <label>
+                    State
+                    <select formControlName="state">
+                        <option value="" disabled selected hidden>
+                            Select a State...
+                        </option>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                        <option value="AR">Arkansas</option>
+                        <option value="CA">California</option>
+                        <option value="CO">Colorado</option>
+                        <option value="WI">Wisconsin</option>
+                        <option value="WY">Wyoming</option>
+
+                    </select>
+                </label>
+            </div>
+        </div>
     </div>
 
 </form>

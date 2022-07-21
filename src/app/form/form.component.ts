@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 
 function ratingRange(min: number, max: number): ValidatorFn {
@@ -40,6 +40,10 @@ export class FormComponent implements OnInit {
   defaultForm: FormGroup | any;
   emailMessage: string = '';
 
+  get addresses(): FormArray{
+    return <FormArray>this.defaultForm.get('addresses')
+  }
+
 
   private validationMessages: any = {
     required: 'Please enter your email address',
@@ -58,8 +62,10 @@ export class FormComponent implements OnInit {
       }, {validator: emailMatcher}),
       phone: '',
       rating: [null, ratingRange(1, 5)],
-      notification: 'text'
-    })
+      notification: 'text',
+      sendCatalog: true,
+      addresses: this.fb.array([this.buildAddress() ])
+    }) 
 
     // watchChanges(this.defaultForm)
 
@@ -72,6 +78,17 @@ export class FormComponent implements OnInit {
 
   save() {
     console.log(this.defaultForm)
+  }
+
+  buildAddress(): FormGroup {
+    return this.fb.group({
+      addressType: 'home',
+      streetAddress1: '',
+      streetAddress2: '',
+      city: '',
+      state: '',
+      zipCode: '',
+    })
   }
 
   setMessage(c: AbstractControl): void {

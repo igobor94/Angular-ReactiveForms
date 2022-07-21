@@ -11,12 +11,31 @@
             <input type="text" formControlName="lastName"  />
         </label>
     </div>
-    <div class="form__email">
-        <label>
-            E-mail
-            <input type="email" formControlName="email"  />
-        </label>
+
+    <div formGroupName="emailGroup">
+        <div class="form__email">
+            <label>
+                E-mail
+                <input type="email" formControlName="email" [ngClass]="{'is-invalid': defaultForm.get('emailGroup').errors || ((defaultForm.get('emailGroup.email').touched || defaultForm.get('emailGroup.email').dirty) && !defaultForm.get('emailGroup.email').valid )}"/>
+            </label>
+            <span *ngIf="defaultForm.get('emailGroup.email').errors?.required">
+                Please press your email address
+            </span>
+        </div>
+        <div class="form__email form__confirm-email">
+            <label>
+                confirm e-mail
+                <input type="email" formControlName="confirmEmail"  />
+            </label>
+            <span *ngIf="defaultForm.get('emailGroup.confirmEmail').errors?.required">
+                Please confirm your email address
+            </span>
+            <span *ngIf="defaultForm.get('emailGroup').errors?.match">
+                The confirmation does not match with the email address
+            </span>
+        </div>
     </div>
+
     <div class="form__phone">
         <label>
             Phone

@@ -10,6 +10,19 @@ function ratingRange(min: number, max: number): ValidatorFn {
   }
 }
 
+function emailMatcher(c: AbstractControl): {[key: string]: boolean} | null {
+  const emailControl = c.get('email');
+  const confirmControlEmail = c.get('confirmEmail');
+
+  if (emailControl?.value === confirmControlEmail?.value) {
+    return null
+  }
+  if (emailControl?.pristine === confirmControlEmail?.pristine) {
+    return null
+  }
+  return { 'match': true };
+}
+
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
@@ -25,7 +38,10 @@ export class FormComponent implements OnInit {
     this.defaultForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(3)]],
       lastName: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
+      emailGroup: this.fb.group({
+        email: ['', [Validators.required, Validators.email]],
+        confirmEmail: ['', Validators.required],
+      }, {validator: emailMatcher}),
       phone: '',
       rating: [null, ratingRange(1, 5)],
       notification: 'text'
@@ -44,7 +60,6 @@ export class FormComponent implements OnInit {
     } else {
       phoneControl.clearValidators();
     }
-
     phoneControl.updateValueAndValidity();
   }
 

@@ -80,6 +80,10 @@ export class FormComponent implements OnInit {
     console.log(this.defaultForm)
   }
 
+  addAddress(): void {
+    this.addresses.push(this.buildAddress());
+  }
+
   buildAddress(): FormGroup {
     return this.fb.group({
       addressType: 'home',

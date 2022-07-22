@@ -81,8 +81,8 @@
 
     <div class="form__address" *ngIf="defaultForm.get('sendCatalog').value">
 
-        <div formArrayName="addresses">
-            <div formGroupName="addresses">
+        <div formArrayName="addresses" *ngFor="let address of addresses.controls; let i = index">
+            <div [formGroupName]="i">
                 <div class="form__checkInline">
                     <label>
                         Work
@@ -133,5 +133,17 @@
             </div>
         </div>
     </div>
+    <button type="button" (click)="addAddress()">
+        Add Another Address
+    </button>
+    
 
 </form>
+
+<br>Dirty: {{ defaultForm.dirty }}
+<br>Touched: {{ defaultForm.touched }}
+<br>Valid: {{ defaultForm.valid }}
+<br>Value: {{ defaultForm.value | json }}
+<br>Street: {{ addresses.get('0.streetAddress1')?.value }}
+<br>&nbsp;
+
